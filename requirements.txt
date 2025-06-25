@@ -1,6 +1,6 @@
 streamlit
 langchain
 faiss-cpu
-openai
+openai>=1.0.0
 google-generativeai
 langchain-community
