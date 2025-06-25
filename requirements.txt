@@ -1,5 +1,5 @@
 streamlit
 langchain
-faiss-cpu
+faiss
 openai
 google-generativeai
