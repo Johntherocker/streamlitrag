@@ -17,7 +17,7 @@ def download_file(url, local_path):
             f.write(r.content)
 
 def download_faiss_index():
-    base_url = "www.media.githubusercontent.com/media/Johntherocker/streamlitrag/refs/heads/master/"
+    base_url = "https://www.media.githubusercontent.com/media/Johntherocker/streamlitrag/refs/heads/master/"
     index_faiss_path = Path("/tmp/index.faiss")
     index_pkl_path = Path("/tmp/index.pkl")
 
