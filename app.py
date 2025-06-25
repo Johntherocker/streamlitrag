@@ -10,11 +10,18 @@ import google.generativeai as genai
 os.environ["OPENAI_API_KEY"] = ${{ secrets.OPENAI_API_KEY }}
 os.environ["GOOGLE_API_KEY"] = ${{ secrets.GOOGLE_API_KEY }}
 
+import os
+
+# Get current working directory in Jupyter
+current_dir = os.getcwd()
+
+faiss_folder_path = os.path.join(current_dir, "faiss_index_store")
+
 # Load vector store and embeddings
 @st.cache_resource
 def load_faiss_index():
     embeddings = OpenAIEmbeddings()
-    faiss_index = FAISS.load_local(r"c:\users\ceder\faiss_index_store", embeddings,allow_dangerous_deserialization=True)
+    faiss_index = FAISS.load_local(faiss_folder_path, embeddings,allow_dangerous_deserialization=True)
     return faiss_index
 
 faiss_index = load_faiss_index()
