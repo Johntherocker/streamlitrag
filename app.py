@@ -6,11 +6,12 @@ from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 import google.generativeai as genai
 
-# Set your API keys
-os.environ["OPENAI_API_KEY"] = ${{ secrets.OPENAI_API_KEY }}
-os.environ["GOOGLE_API_KEY"] = ${{ secrets.GOOGLE_API_KEY }}
 
-import os
+openai_api_key = os.getenv("OPENAI_API_KEY")
+google_api_key = os.getenv("GOOGLE_API_KEY")
+
+os.environ["OPENAI_API_KEY"] = openai_api_key 
+os.environ["GOOGLE_API_KEY"] = google_api_key
 
 # Get current working directory in Jupyter
 current_dir = os.getcwd()
