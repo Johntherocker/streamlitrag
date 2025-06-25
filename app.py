@@ -6,6 +6,19 @@ from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 import google.generativeai as genai
 
+import requests
+from pathlib import Path
+
+def download_faiss_index():
+    faiss_url = "https://github.com/Johntherocker/streamlitrag/blob/master/index.faiss"
+    local_path = Path("/tmp/index.faiss")
+    if not local_path.exists():
+        r = requests.get(faiss_url)
+        r.raise_for_status()
+        with open(local_path, "wb") as f:
+            f.write(r.content)
+    return local_path
+
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 google_api_key = os.getenv("GOOGLE_API_KEY")
@@ -21,8 +34,9 @@ faiss_folder_path = os.path.join(current_dir, "faiss_index_store")
 # Load vector store and embeddings
 @st.cache_resource
 def load_faiss_index():
+    index_path = download_faiss_index()
     embeddings = OpenAIEmbeddings()
-    faiss_index = FAISS.load_local(faiss_folder_path, embeddings,allow_dangerous_deserialization=True)
+    faiss_index = FAISS.load_local(str(index_path.parent), embeddings,allow_dangerous_deserialization=True)
     return faiss_index
 
 faiss_index = load_faiss_index()
