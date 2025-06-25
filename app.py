@@ -41,8 +41,8 @@ def download_faiss_index():
 openai_api_key = os.getenv("OPENAI_API_KEY")
 google_api_key = os.getenv("GOOGLE_API_KEY")
 
-os.environ["OPENAI_API_KEY"] = openai_api_key 
-os.environ["GOOGLE_API_KEY"] = google_api_key
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"] 
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 # Get current working directory in Jupyter
 current_dir = os.getcwd()
