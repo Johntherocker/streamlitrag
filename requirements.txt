@@ -3,3 +3,4 @@ langchain
 faiss-cpu
 openai
 google-generativeai
+langchain-community
