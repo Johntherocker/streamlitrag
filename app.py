@@ -17,9 +17,23 @@ def download_file(url, local_path):
             f.write(r.content)
 
 def download_faiss_index():
-    base_url = "https://github.com/Johntherocker/streamlitrag/tree/master"
-    download_file(base_url + "/index.faiss", Path("/tmp/index.faiss"))
-    download_file(base_url + "/index.pkl", Path("/tmp/index.pkl"))
+    base_url = "https://github.com/YourUsername/YourRepo/raw/main/faiss_index_store"
+    index_faiss_path = Path("/tmp/index.faiss")
+    index_pkl_path = Path("/tmp/index.pkl")
+
+    if not index_faiss_path.exists():
+        r = requests.get(f"{base_url}/index.faiss")
+        r.raise_for_status()
+        with open(index_faiss_path, "wb") as f:
+            f.write(r.content)
+
+    if not index_pkl_path.exists():
+        r = requests.get(f"{base_url}/index.pkl")
+        r.raise_for_status()
+        with open(index_pkl_path, "wb") as f:
+            f.write(r.content)
+
+    return index_faiss_path.parent  # this will be /tmp
 
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -36,9 +50,11 @@ faiss_folder_path = os.path.join(current_dir, "faiss_index_store")
 # Load vector store and embeddings
 @st.cache_resource
 def load_faiss_index():
-    index_path = download_faiss_index()
     embeddings = OpenAIEmbeddings()
-    faiss_index = FAISS.load_local(str(index_path.parent), embeddings,allow_dangerous_deserialization=True)
+    faiss_folder_path = download_faiss_index()
+    faiss_index = FAISS.load_local(
+        str(faiss_folder_path), embeddings, allow_dangerous_deserialization=True
+    )
     return faiss_index
 
 faiss_index = load_faiss_index()
