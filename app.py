@@ -9,15 +9,17 @@ import google.generativeai as genai
 import requests
 from pathlib import Path
 
-def download_faiss_index():
-    faiss_url = "https://github.com/Johntherocker/streamlitrag/blob/master/index.faiss"
-    local_path = Path("/tmp/index.faiss")
+def download_file(url, local_path):
     if not local_path.exists():
-        r = requests.get(faiss_url)
+        r = requests.get(url)
         r.raise_for_status()
         with open(local_path, "wb") as f:
             f.write(r.content)
-    return local_path
+
+def download_faiss_index():
+    base_url = "https://github.com/Johntherocker/streamlitrag/tree/master"
+    download_file(base_url + "/index.faiss", Path("/tmp/index.faiss"))
+    download_file(base_url + "/index.pkl", Path("/tmp/index.pkl"))
 
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
