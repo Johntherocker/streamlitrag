@@ -17,23 +17,25 @@ def download_file(url, local_path):
             f.write(r.content)
 
 def download_faiss_index():
-    base_url = "https://www.media.githubusercontent.com/media/Johntherocker/streamlitrag/refs/heads/master/"
+    faiss_url = "https://www.dropbox.com/scl/fi/y5kw2ut5orxhww7a6pydp/index.faiss?rlkey=igd39gip391qvbutmil5hw3u8&st=3wdtafag&dl=0"
+    pkl_url = "https://www.dropbox.com/scl/fi/kly0btqxm9tfd02wnxzds/index.pkl?rlkey=3tg1bdyemk4wx74htbjzct21a&st=u89nmt2w&dl=0"
+
     index_faiss_path = Path("/tmp/index.faiss")
     index_pkl_path = Path("/tmp/index.pkl")
 
     if not index_faiss_path.exists():
-        r = requests.get(f"{base_url}/index.faiss")
+        r = requests.get(faiss_url)
         r.raise_for_status()
         with open(index_faiss_path, "wb") as f:
             f.write(r.content)
 
     if not index_pkl_path.exists():
-        r = requests.get(f"{base_url}/index.pkl")
+        r = requests.get(pkl_url)
         r.raise_for_status()
         with open(index_pkl_path, "wb") as f:
             f.write(r.content)
 
-    return index_faiss_path.parent  # this will be /tmp
+    return index_faiss_path.parent
 
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
