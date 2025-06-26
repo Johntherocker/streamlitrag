@@ -86,7 +86,7 @@ st.title("📘 The Business Oracle (RAG + Gemini)")
 
 query = st.text_area("Enter your business question:")
 
-top_k = st.slider("Number of relevant documents (top_k)", 1, 100, 4)
+top_k = st.slider("Number of relevant documents (top_k)", 1, 500, 4)
 
 if st.button("Get Advice"):
     if query.strip():
