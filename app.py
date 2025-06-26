@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.docstore.document import Document
 from langchain.embeddings import OpenAIEmbeddings
 import google.generativeai as genai
+import tiktoken
 
 import requests
 from pathlib import Path
