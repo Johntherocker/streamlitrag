@@ -71,8 +71,8 @@ def rag_query(query: str, top_k: int = 4):
     similar_docs = faiss_index.similarity_search(query, k=top_k)
     context = "\n\n".join(doc.page_content for doc in similar_docs)
 
-    prompt = f"""You are a small business oracle with access to the best business books ever in bookall.txt. You give excellent business advice like a management consultant on steroids.
-Context: Advice for small businesses
+    prompt = f"""You are a business oracle with access to the best business books ever in bookall.txt. You give excellent business advice like a management consultant on steroids.
+Context: Advice for businesses.
 {context}
 
 Question: {query}
