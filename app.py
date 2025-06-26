@@ -82,7 +82,7 @@ Answer:"""
     return response.text
 
 # Streamlit UI
-st.title("📘 Small Business Advisor (RAG + Gemini)")
+st.title("📘 The Business Oracle (RAG + Gemini)")
 
 query = st.text_area("Enter your business question:")
 
