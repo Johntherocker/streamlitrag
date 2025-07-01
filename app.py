@@ -88,14 +88,14 @@ Answer:"""
 
 #top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
 
-if st.button("Get Advice"):
-    if query.strip():
-        with st.spinner("Thinking..."):
-            answer = rag_query(query, top_k)
-            st.markdown("### 💡 Advice:")
-            st.write(answer)
-    else:
-        st.warning("Please enter a question.")
+#if st.button("Get Advice"):
+#    if query.strip():
+#        with st.spinner("Thinking..."):
+#            answer = rag_query(query, top_k)
+#            st.markdown("### 💡 Advice:")
+#            st.write(answer)
+#    else:
+#        st.warning("Please enter a question.")
 
 # Initialize chat history in session state
 if "chat_history" not in st.session_state:
