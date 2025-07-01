@@ -96,3 +96,57 @@ if st.button("Get Advice"):
             st.write(answer)
     else:
         st.warning("Please enter a question.")
+
+# Initialize chat history in session state
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+def rag_query_with_history(query: str, chat_history: list, top_k: int = 4):
+    similar_docs = faiss_index.similarity_search(query, k=top_k)
+    context = "\n\n".join(doc.page_content for doc in similar_docs)
+
+    # Format chat history as dialogue
+    history_text = ""
+    for i, (q, a) in enumerate(chat_history):
+        history_text += f"User: {q}\nBusiness Oracle: {a}\n"
+
+    prompt = f"""You are a business oracle with access to the best business books ever in bookall.txt. You give excellent business advice like a management consultant on steroids.
+Context: Advice for businesses.
+{context}
+
+Conversation history:
+{history_text}
+
+User: {query}
+Answer:"""
+
+    response = gemini_model.generate_content(prompt)
+    return response.text
+
+# In your Streamlit app UI code:
+
+st.title("📘 The Business Oracle (RAG + Gemini)")
+
+query = st.text_area("Enter your business question:")
+
+top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
+
+if st.button("Get Advice"):
+    if query.strip():
+        with st.spinner("Thinking..."):
+            answer = rag_query_with_history(query, st.session_state.chat_history, top_k)
+            # Append current Q&A to chat history
+            st.session_state.chat_history.append((query, answer))
+
+            st.markdown("### 💡 Advice:")
+            st.write(answer)
+    else:
+        st.warning("Please enter a question.")
+
+# Optionally show previous Q&A for user reference:
+if st.session_state.chat_history:
+    st.markdown("### Conversation History")
+    for i, (q, a) in enumerate(st.session_state.chat_history):
+        st.markdown(f"**Q{i+1}:** {q}")
+        st.markdown(f"**A{i+1}:** {a}")
+        st.markdown("---")
