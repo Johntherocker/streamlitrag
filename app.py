@@ -84,7 +84,7 @@ Answer:"""
 # Streamlit UI
 st.title("📘 The Business Oracle (RAG + Gemini)")
 
-query = st.text_area("Enter your business question:", key="query_input")
+query = st.text_area("Enter your business question:")
 
 top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
 
@@ -127,26 +127,17 @@ Answer:"""
 
 st.title("📘 The Business Oracle (RAG + Gemini)")
 
-query = st.text_area("Enter your business question:")
+query = st.text_area("Enter your business question:", key="query_input")
 
-top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
+top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4, key="top_k_slider")
 
-if st.button("Get Advice"):
+if st.button("Get Advice", key="get_advice_button"):
     if query.strip():
         with st.spinner("Thinking..."):
             answer = rag_query_with_history(query, st.session_state.chat_history, top_k)
-            # Append current Q&A to chat history
             st.session_state.chat_history.append((query, answer))
 
             st.markdown("### 💡 Advice:")
             st.write(answer)
     else:
         st.warning("Please enter a question.")
-
-# Optionally show previous Q&A for user reference:
-if st.session_state.chat_history:
-    st.markdown("### Conversation History")
-    for i, (q, a) in enumerate(st.session_state.chat_history):
-        st.markdown(f"**Q{i+1}:** {q}")
-        st.markdown(f"**A{i+1}:** {a}")
-        st.markdown("---")
