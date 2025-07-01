@@ -82,11 +82,11 @@ Answer:"""
     return response.text
 
 # Streamlit UI
-st.title("📘 The Business Oracle (RAG + Gemini)")
+#st.title("📘 The Business Oracle (RAG + Gemini)")
 
-query = st.text_area("Enter your business question:")
+#query = st.text_area("Enter your business question:")
 
-top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
+#top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
 
 if st.button("Get Advice"):
     if query.strip():
