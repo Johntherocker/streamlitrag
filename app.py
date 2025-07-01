@@ -84,7 +84,7 @@ Answer:"""
 # Streamlit UI
 st.title("📘 The Business Oracle (RAG + Gemini)")
 
-query = st.text_area("Enter your business question:")
+query = st.text_area("Enter your business question:", key="query_input")
 
 top_k = st.slider("Number of relevant documents (top_k)", 1, 20, 4)
 
